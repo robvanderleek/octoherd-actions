@@ -19,8 +19,8 @@ jobs:
       - name: 'Inject slug/short variables'
         uses: rlespinasse/github-slug-action@v3.x
       - run: |
-          npx $SCRIPT -T $TOKEN -R REPO_SLUG
+          npx $SCRIPT -T $TOKEN -R $REPO_SLUG
         env:
           SCRIPT: ${{ github.event.inputs.script }}
-          TOKEN: ${{ github.secret }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO_SLUG: ${{ env.GITHUB_REPOSITORY_SLUG_URL }}
