@@ -3,15 +3,15 @@ name: Octoherd
 on:
   workflow_dispatch:
     inputs: 
-      options:
-        description: 'Script options, e.g.: --topics my-topic --topics my-other-topic '
-        required: false
-        type: string
-        default: ''
       script:
         description: 'Script, e.g.: octoherd-script-replace-all-repository-topics'
         required: true
         type: string
+      script_options:
+        description: 'Script options, e.g.: --topics my-topic --topics my-other-topic '
+        required: false
+        type: string
+        default: ''
 
 jobs:
   run-octoherd-script:
@@ -27,6 +27,6 @@ jobs:
           npx $SCRIPT $SCRIPT_OPTIONS -T $TOKEN -R $REPO_SLUG --octoherd-bypass-confirms
         env:
           SCRIPT: ${{ github.event.inputs.script }}
-          SCRIPT_OPTIONS: ${{ github.event.inputs.options }}
+          SCRIPT_OPTIONS: ${{ github.event.inputs.script_options }}
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO_SLUG: ${{ env.GITHUB_REPOSITORY }}
