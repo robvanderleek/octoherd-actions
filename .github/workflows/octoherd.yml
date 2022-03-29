@@ -4,9 +4,14 @@ on:
   workflow_dispatch:
     inputs: 
       script:
-        description: 'Octoherd script, e.g.: @octoherd/script-star-or-unstar'
+        description: 'Script, e.g.: octoherd-script-replace-all-repository-topics'
         required: true
         type: string
+      options:
+        description: 'Script options, e.g.: --topics my-topic --topics my-other-topic '
+        required: false
+        type: string
+        default: ''
 
 jobs:
   run-octoherd-script:
@@ -19,8 +24,9 @@ jobs:
       - name: 'Inject slug/short variables'
         uses: rlespinasse/github-slug-action@v4.x
       - run: |
-          npx $SCRIPT -T $TOKEN -R $REPO_SLUG --octoherd-bypass-confirms
+          npx $SCRIPT $SCRIPT_OPTIONS -T $TOKEN -R $REPO_SLUG --octoherd-bypass-confirms
         env:
           SCRIPT: ${{ github.event.inputs.script }}
+          SCRIPT_OPTIONS: ${{ github.event.input.options }}
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO_SLUG: ${{ env.GITHUB_REPOSITORY }}
