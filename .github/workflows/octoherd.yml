@@ -27,6 +27,6 @@ jobs:
           npx $SCRIPT $SCRIPT_OPTIONS -T $TOKEN -R $REPO_SLUG --octoherd-bypass-confirms
         env:
           SCRIPT: ${{ github.event.inputs.script }}
-          SCRIPT_OPTIONS: ${{ github.event.input.options }}
+          SCRIPT_OPTIONS: ${{ github.event.inputs.options }}
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO_SLUG: ${{ env.GITHUB_REPOSITORY }}
