@@ -3,15 +3,15 @@ name: Octoherd
 on:
   workflow_dispatch:
     inputs: 
-      script:
-        description: 'Script, e.g.: octoherd-script-replace-all-repository-topics'
-        required: true
-        type: string
       options:
         description: 'Script options, e.g.: --topics my-topic --topics my-other-topic '
         required: false
         type: string
         default: ''
+      script:
+        description: 'Script, e.g.: octoherd-script-replace-all-repository-topics'
+        required: true
+        type: string
 
 jobs:
   run-octoherd-script:
