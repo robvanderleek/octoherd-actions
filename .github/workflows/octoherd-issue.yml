@@ -22,10 +22,13 @@ jobs:
         with:
           template-path: .github/ISSUE_TEMPLATE/start-octoherd-script.yml
       - name: 'Run Octoherd script'
+        shell: bash
         run: |
+          TOKEN=${OCTOHERD_TOKEN:-$GITHUB_TOKEN}
           npx $SCRIPT $SCRIPT_OPTIONS -T $TOKEN -R $REPO_SLUG --octoherd-bypass-confirms
         env:
           SCRIPT: ${{ steps.issue-parser.outputs.issueparser_script }}
           SCRIPT_OPTIONS: ${{ steps.issue-parser.outputs.issueparser_script_options }}
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OCTOHERD_TOKEN: ${{ secrets.OCTOHERD_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO_SLUG: ${{ env.GITHUB_REPOSITORY }}
