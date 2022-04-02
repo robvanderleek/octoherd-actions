@@ -1,0 +1,30 @@
+name: Octoherd
+
+on:
+  issues:
+    types: [ opened ]
+
+jobs:
+  run-octoherd-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Setup Node'
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: 'Inject slug/short variables'
+        uses: rlespinasse/github-slug-action@v4.x
+      - name: 'Parse issue'
+        uses: stefanbuck/github-issue-parser@v2
+        id: issue-parser
+        with:
+          template-path: .github/ISSUE_TEMPLATE/start-octoherd-script.yml
+      - run: echo '${{ steps.issue-parser.outputs.jsonString }}'
+      - run: echo '${{ steps.issue-parser.outputs }}'
+      - run: |
+          npx $SCRIPT $SCRIPT_OPTIONS -T $TOKEN -R $REPO_SLUG --octoherd-bypass-confirms
+        env:
+          SCRIPT: ${{ github.event.inputs.script }}
+          SCRIPT_OPTIONS: ${{ github.event.inputs.script_options }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_SLUG: ${{ env.GITHUB_REPOSITORY }}

@@ -1,0 +1,22 @@
+name: Start Octoherd script
+description: Kick-off a GitHub Actions workflow that runs an Octoherd script
+labels: [octoherd]
+
+title: "Start Octoherd script"
+
+body:
+- type: dropdown
+  id: script
+  attributes:
+    label: Choose script
+    options:
+      - '@octoherd/script-hello-world'
+  validations:
+    required: true
+
+- type: input
+  id: script_options
+  attributes:
+    label: Script options (e.g.: --greeting-name Octocat)
+  validations:
+    required: false
