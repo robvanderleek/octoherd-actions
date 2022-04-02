@@ -19,13 +19,11 @@ jobs:
         id: issue-parser
         with:
           template-path: .github/ISSUE_TEMPLATE/start-octoherd-script.yml
-      - run: echo '${{ steps.issue-parser.outputs.jsonString }}'
-      - run: echo '${{ steps.issue-parser.outputs.issueparser_choose_script }}'
-      - run: echo '${{ steps.issue-parser.outputs.issueparser_script_options_eg_greetingname_octocat }}'
-      - run: |
+      - name: 'Run Octoherd script'
+        run: |
           npx $SCRIPT $SCRIPT_OPTIONS -T $TOKEN -R $REPO_SLUG --octoherd-bypass-confirms
         env:
-          SCRIPT: ${{ github.event.inputs.script }}
-          SCRIPT_OPTIONS: ${{ github.event.inputs.script_options }}
+          SCRIPT: ${{ steps.issue-parser.outputs.issueparser_choose_script }}
+          SCRIPT_OPTIONS: ${{ steps.issue-parser.outputs.issueparser_script_options_eg_greetingname_octocat }}
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO_SLUG: ${{ env.GITHUB_REPOSITORY }}
