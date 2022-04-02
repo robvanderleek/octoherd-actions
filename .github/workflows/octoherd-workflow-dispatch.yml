@@ -23,10 +23,14 @@ jobs:
           node-version: '16'
       - name: 'Inject slug/short variables'
         uses: rlespinasse/github-slug-action@v4.x
-      - run: |
+      - name: 'Run Octoherd script'
+        shell: bash
+        run: |
+          TOKEN=${OCTOHERD_TOKEN:-$GITHUB_TOKEN}
           npx $SCRIPT $SCRIPT_OPTIONS -T $TOKEN -R $REPO_SLUG --octoherd-bypass-confirms
         env:
           SCRIPT: ${{ github.event.inputs.script }}
           SCRIPT_OPTIONS: ${{ github.event.inputs.script_options }}
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OCTOHERD_TOKEN: ${{ secrets.OCTOHERD_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO_SLUG: ${{ env.GITHUB_REPOSITORY }}
