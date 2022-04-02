@@ -17,6 +17,6 @@ body:
 - type: input
   id: script_options
   attributes:
-    label: Script options (e.g.: --greeting-name Octocat)
+    label: 'Script options (e.g.: --greeting-name Octocat)'
   validations:
     required: false
