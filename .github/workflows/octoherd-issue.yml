@@ -20,7 +20,8 @@ jobs:
         with:
           template-path: .github/ISSUE_TEMPLATE/start-octoherd-script.yml
       - run: echo '${{ steps.issue-parser.outputs.jsonString }}'
-      - run: echo '${{ steps.issue-parser.outputs }}'
+      - run: echo '${{ steps.issue-parser.outputs.issueparser_script }}'
+      - run: echo '${{ steps.issue-parser.outputs.issueparser_script_options }}'
       - run: |
           npx $SCRIPT $SCRIPT_OPTIONS -T $TOKEN -R $REPO_SLUG --octoherd-bypass-confirms
         env:
